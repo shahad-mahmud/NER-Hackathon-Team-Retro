@@ -6,7 +6,7 @@ from augment import get_category2mentions, get_label2tokens
 import torch.nn as nn
 from trainer import train,eval
 from cost import crit_weights_gen
-from net import Net
+from net import Net, BertWithEmbeds
 from collections import Counter
 from dataset import NerDataset, VOCAB, pad, remove_duplicates, tag2idx, read_conll
 from resample import Resampling
@@ -193,7 +193,8 @@ def main():
     
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     output_dir = args.output_dir
-    model = Net(top_rnns, len(VOCAB), device, finetuning)
+    # model = Net(top_rnns, len(VOCAB), device, finetuning)
+    model = BertWithEmbeds(top_rnns, len(VOCAB), device, finetuning)
     #model.load_state_dict(torch.load('models/banner_model.pt'))
     model.to(device)
     valid_texts, valid_labels = list(zip(*val_examples))
@@ -245,7 +246,7 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr = lr)
     num_train_optimization_steps = int(
             len(train_dataset) / train_batch_size ) * n_epochs
-    run = wandb.init(project="hackathon_ner",entity='mahtab-team',config=vars(args))
+    run = wandb.init(project="banner",entity='shahad001',config=vars(args))
     if args.banner_weighted:
         d = Counter([label for example in train_labels for label in example])
         data_dist = [d[key] for key in tag2idx.keys() if key!='<PAD>']
