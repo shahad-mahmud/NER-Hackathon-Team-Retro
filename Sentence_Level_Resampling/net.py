@@ -91,9 +91,9 @@ class BertWithEmbeds(nn.Module):
         self.top_rnns = top_rnns
         if top_rnns:
             self.rnn = nn.LSTM(bidirectional=True, num_layers=4, dropout=0.5,
-                               input_size=768+50+64, hidden_size=882//2, batch_first=True)
+                               input_size=768+64, hidden_size=832//2, batch_first=True)
         self.fc = nn.Sequential(
-            nn.Linear(768+50+64, 512),
+            nn.Linear(768+64, 512),
             nn.Dropout(0.5),
             nn.Linear(512, vocab_size)
         )
@@ -124,19 +124,19 @@ class BertWithEmbeds(nn.Module):
                 enc = encoded_layers.hidden_states[-1]
 
         # create the n-grams
-        n_gram_batch = []
-        for sample in enc:
-            n_tokens = sample.shape[0]
-            n_grams = [torch.mean(sample[0:2], dim=0)]
-            for i in range(1, n_tokens-1):
-                n_grams.append(torch.mean(sample[i-1:i+2], dim=0))
-            n_grams.append(torch.mean(sample[n_tokens-1:], dim=0))
+        # n_gram_batch = []
+        # for sample in enc:
+        #     n_tokens = sample.shape[0]
+        #     n_grams = [torch.mean(sample[0:2], dim=0)]
+        #     for i in range(1, n_tokens-1):
+        #         n_grams.append(torch.mean(sample[i-1:i+2], dim=0))
+        #     n_grams.append(torch.mean(sample[n_tokens-1:], dim=0))
 
-            n_gram_batch.append(torch.stack(n_grams))
+        #     n_gram_batch.append(torch.stack(n_grams))
 
-        n_gram_batch = torch.stack(n_gram_batch)
-        n_gram_batch = self.projection(n_gram_batch)
-        enc = torch.concat([enc, n_gram_batch], dim=2)
+        # n_gram_batch = torch.stack(n_gram_batch)
+        # n_gram_batch = self.projection(n_gram_batch)
+        # enc = torch.concat([enc, n_gram_batch], dim=2)
         
         enc = torch.concat([enc, y_1], dim=2)
 
