@@ -1,1 +1,2 @@
 matplotlib
+deep-utils==0.10.7
