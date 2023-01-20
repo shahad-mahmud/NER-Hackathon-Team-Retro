@@ -103,12 +103,12 @@ class BertWithEmbeds(nn.Module):
         self.crf = CRF(len(VOCAB))
 
     def forward(self, x, y=None, attention_mask=None, epoch=None):
+        x = x.to(self.device)
         
         y_1 = self.embeddings(x)
         y_1, _ = self.lstm(y_1)
         # print(y_1.shape)
 
-        x = x.to(self.device)
         attention_mask = attention_mask.to(self.device)
         if y is not None:
             y = y.to(self.device)
