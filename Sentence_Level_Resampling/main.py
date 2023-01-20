@@ -260,6 +260,8 @@ def main():
     else:
         criterion = nn.CrossEntropyLoss(ignore_index=0)
 
+    import curricular_face
+    cost = curricular_face.CurricularFace(len(VOCAB),len(VOCAB))
     #last_loss = 100000000000
     #patience = 100
     #triggertimes = 0
@@ -283,9 +285,10 @@ def main():
                                     {"params": model.fc.parameters(), "lr": 0.0005},
                                     {"params": model.bert.parameters(), "lr": 5e-5},
                                     {"params": model.rnn.parameters(), "lr": 0.0005},
-                                    {"params": model.crf.parameters(), "lr": 0.0005}
+                                    {"params": model.crf.parameters(), "lr": 0.0005},
+                                    {"params": cost.parameters(), "lr": 0.0005}
                                     ],)
-        loss_list = train(model, train_iter, optimizer, criterion, epoch, args)
+        loss_list = train(model, train_iter, optimizer, cost, criterion, epoch, args)
         train_loss.extend(loss_list)
         wandb.log({'train_epoch_loss':np.mean(loss_list)})
                   

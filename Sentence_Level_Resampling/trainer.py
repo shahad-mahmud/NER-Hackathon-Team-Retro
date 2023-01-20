@@ -11,7 +11,7 @@ import wandb
 # import mlflow.sklearn
 import math
 
-def train(model, iterator, optimizer, criterion, epoch, args):
+def train(model, iterator, optimizer, cost, criterion, epoch, args):
     loss_list = []
     model.train()
     n_steps_per_epoch = math.ceil(len(iterator.dataset) / args.train_batch_size)
@@ -24,8 +24,12 @@ def train(model, iterator, optimizer, criterion, epoch, args):
 
         logits_focal = logits_focal.view(-1, logits_focal.shape[-1])
         y_focal = y.view(-1)
-
-        loss1 = criterion(logits_focal, y_focal)
+        
+        temp, _ = cost(logits_focal, y_focal)
+        loss1 = criterion(temp, y_focal)
+        if isinstance(loss1, tuple):
+            loss1 = loss1[0]
+        
         loss = logits_crf+loss1
         loss_list.append(int(loss))
         loss.backward()
