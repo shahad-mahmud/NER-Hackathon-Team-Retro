@@ -2,6 +2,8 @@ import numpy as np
 import torch
 from torch.utils import data
 from transformers import AutoTokenizer
+from normalizer import normalize
+from tqdm import tqdm
 
 #tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-cased', do_lower_case=False)
 tokenizer = AutoTokenizer.from_pretrained("csebuetnlp/banglabert")
@@ -117,12 +119,14 @@ def read_conll(file_in):
     # raw_examples = []
     # is_title = False
     with open(file_in, "r",encoding='utf-8') as fh:
-        for line in fh:
+        for line in tqdm(fh, desc=f'Reading {file_in}'):
             line = line.strip()
             
             if len(line) > 0:
                 parts  = line.split('_')
                 word,label = parts[0].strip(),parts[-1].strip()
+                
+                word = normalize(word)
                 
                 words.append(word)
                 labels.append(label)

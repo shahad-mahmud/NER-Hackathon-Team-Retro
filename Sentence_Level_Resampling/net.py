@@ -55,14 +55,11 @@ class Net(nn.Module):
                 n_grams.append(torch.mean(sample[i-1:i+2], dim=0))
             n_grams.append(torch.mean(sample[n_tokens-1:], dim=0))
             
-            # torch.concat([sample, torch.tensor(n_grams).to(sample.dtype)], dim=1)
-            n_gram_batch.append(torch.stack(n_grams))#.to(sample.dtype))
+            n_gram_batch.append(torch.stack(n_grams))
         
-        # print(n_gram_batch)
-        n_gram_batch = torch.stack(n_gram_batch)#.unsqueeze(0)
+        n_gram_batch = torch.stack(n_gram_batch)
         n_gram_batch = self.projection(n_gram_batch)
         enc = torch.concat([enc, n_gram_batch], dim=2)
-        # print(enc.shape, n_gram_batch.shape)
 
         if self.top_rnns:
             enc, _ = self.rnn(enc)
