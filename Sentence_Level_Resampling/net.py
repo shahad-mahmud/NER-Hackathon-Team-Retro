@@ -13,15 +13,17 @@ class Net(nn.Module):
 
         #self.bert = BertModel.from_pretrained('bert-base-multilingual-cased')
         self.bert = AutoModelForPreTraining.from_pretrained("csebuetnlp/banglabert", config = coonfig )
+        self.projection = nn.Linear(768, 50, False)
 
         self.top_rnns=top_rnns
         if top_rnns:
-            self.rnn = nn.LSTM(bidirectional=True, num_layers=4, dropout=0.5, input_size=768, hidden_size=768//2, batch_first=True)
+            self.rnn = nn.LSTM(bidirectional=True, num_layers=4, dropout=0.5, input_size=768+50, hidden_size=818//2, batch_first=True)
         self.fc = nn.Sequential( 
-                nn.Linear(768, 512),
+                nn.Linear(768+50, 512),
                 nn.Dropout(0.5),
                 nn.Linear(512, vocab_size)
-    )
+        )
+        
 
         self.device = device
         self.finetuning = finetuning
@@ -43,6 +45,24 @@ class Net(nn.Module):
             with torch.no_grad():
                 encoded_layers = self.bert(x,attention_mask=attention_mask)
                 enc = encoded_layers.hidden_states[-1]
+        
+        # create the n-grams
+        n_gram_batch = []
+        for sample in enc:
+            n_tokens = sample.shape[0]
+            n_grams = [torch.mean(sample[0:2], dim=0)]
+            for i in range(1, n_tokens-1):
+                n_grams.append(torch.mean(sample[i-1:i+2], dim=0))
+            n_grams.append(torch.mean(sample[n_tokens-1:], dim=0))
+            
+            # torch.concat([sample, torch.tensor(n_grams).to(sample.dtype)], dim=1)
+            n_gram_batch.append(torch.stack(n_grams))#.to(sample.dtype))
+        
+        # print(n_gram_batch)
+        n_gram_batch = torch.stack(n_gram_batch)#.unsqueeze(0)
+        n_gram_batch = self.projection(n_gram_batch)
+        enc = torch.concat([enc, n_gram_batch], dim=2)
+        # print(enc.shape, n_gram_batch.shape)
 
         if self.top_rnns:
             enc, _ = self.rnn(enc)
