@@ -5,6 +5,7 @@ import argparse
 
 import sklearn_crfsuite
 from sklearn import metrics
+from tqdm import tqdm
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -17,8 +18,8 @@ if __name__ == "__main__":
     valid_data = src.utils.read_ner_data(configs['valid_data_path'])
     test_data = src.utils.read_ner_data(configs['test_data_path'])
     
-    train_features = [src.utils.line_to_features(line) for line in train_data[0]]
-    test_features = [src.utils.line_to_features(line) for line in test_data[0]]
+    train_features = [src.utils.line_to_features(line) for line in tqdm(train_data[0], dynamic_ncols=True)]
+    test_features = [src.utils.line_to_features(line) for line in tqdm(test_data[0], dynamic_ncols=True)]
 
     train_labels = train_data[1]
     test_labels = test_data[1]
