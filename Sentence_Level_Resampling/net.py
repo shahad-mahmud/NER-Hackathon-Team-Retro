@@ -96,13 +96,13 @@ class BertWithEmbeds(nn.Module):
             nn.Linear(768+64+64+64, 512),
             nn.ReLU(),
             nn.Dropout(0.3),
-            nn.Linear(512, 256),
-            nn.ReLU(),
-            nn.Dropout(0.3),
-            nn.Linear(256, 128),
-            nn.ReLU(),
-            nn.Dropout(0.3),
-            nn.Linear(128, vocab_size)
+            # nn.Linear(512, 256),
+            # nn.ReLU(),
+            # nn.Dropout(0.3),
+            # nn.Linear(256, 128),
+            # nn.ReLU(),
+            # nn.Dropout(0.3),
+            nn.Linear(512, vocab_size)
         )
 
         self.device = device

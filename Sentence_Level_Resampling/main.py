@@ -250,7 +250,7 @@ def main():
     if args.banner_weighted:
         d = Counter([label for example in train_labels for label in example])
         data_dist = [d[key] for key in tag2idx.keys() if key!='<PAD>']
-        # data_dist = [7237, 15684, 714867, 759, 20815, 9662, 8512, 37529, 70025]
+        
         crit_weights = crit_weights_gen(0.5, 0.9, data_dist)
         #insert 0 cost for ignoring <PAD>
         crit_weights.insert(0,0)
