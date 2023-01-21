@@ -39,7 +39,6 @@ def read_test_ner_data(file_path: str):
             continue
 
         word = info[0]
-
         lines[-1].append(word)
 
     return lines

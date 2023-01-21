@@ -18,13 +18,11 @@ if __name__ == "__main__":
     
     train_data = src.utils.read_ner_data(configs['train_data_path'])
     valid_data = src.utils.read_ner_data(configs['valid_data_path'])
-    # test_data = src.utils.read_ner_data(configs['test_data_path'])
     test_data = src.utils.read_test_ner_data(configs['test_data_path'])
     
     train_features = [src.utils.line_to_features(line) for line in tqdm(train_data[0], dynamic_ncols=True)]
     valid_features = [src.utils.line_to_features(line) for line in tqdm(valid_data[0], dynamic_ncols=True)]
-    # test_features = [src.utils.line_to_features(line) for line in tqdm(test_data[0], dynamic_ncols=True)]
-    test_features = test_data
+    test_features = [src.utils.line_to_features(line) for line in tqdm(test_data, dynamic_ncols=True)]
 
     train_labels = train_data[1]
     valid_labels = valid_data[1]
@@ -44,10 +42,12 @@ if __name__ == "__main__":
     
     print('Training completed. Predicting on validation set...')
     valid_predictions = model.predict(valid_features)
+    print(valid_predictions)
     
     labels = list(model.classes_)
     valid_labels = src.utils.flatten(valid_labels)
     valid_predictions = src.utils.flatten(valid_predictions)
+    
     
     score = metrics.f1_score(valid_labels, valid_predictions, average='macro', labels=labels)
     print('Macro f1 on validation data:', score)
@@ -73,5 +73,5 @@ if __name__ == "__main__":
         for line in test_predictions:
             for tag in line:
                 res_file.write(f'{tag}\n')
-            res_file.write('\n\n')
+            res_file.write('\n')
     print('Predictions on test data saved on "data/results/feature_model.txt" file.')

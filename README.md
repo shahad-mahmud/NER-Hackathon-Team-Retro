@@ -17,3 +17,14 @@ python feature_train.py configs/ml_model.yaml
 ```
 
 It will train and put the prediction result on test data in the `data/results/feature_model.txt` file.
+
+### Prediction from trained model
+
+Predictions can be generated using trained CRF model using the following command also:
+
+```bash
+feature_model_predict.py TEXT_FILE_PATH --model TRAINED_MODEL_PATH
+
+# example
+# feature_model_predict.py data/preprocessed/test.txt --model data/results/crf.model
+```
