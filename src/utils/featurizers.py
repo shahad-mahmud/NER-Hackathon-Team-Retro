@@ -7,9 +7,10 @@ model_path = 'data/models/bn_pos.pkl'
 
 def line_to_features(line):
     features = []
-    suffix_chars, prefix_chars = 3, 3
+    suffix_chars, prefix_chars = 4, 3
     
     poses = pos.tag(model_path, line)
+    # poses = [('a','a')] * len(line)
     # print(poses)
 
     for i, word in enumerate(line):
@@ -56,3 +57,7 @@ def line_to_features(line):
         features.append(feats)
 
     return features
+
+def show_feature_impacts(states):
+    for (attribution, label), weight in states:
+        print("%0.6f %-8s %s" % (weight, label, attribution))
