@@ -73,5 +73,5 @@ if __name__ == "__main__":
         for line in test_predictions:
             for tag in line:
                 res_file.write(f'{tag}\n')
-            res_file.write('\n')
+            res_file.write('\n\n')
     print('Predictions on test data saved on "data/results/feature_model.txt" file.')
