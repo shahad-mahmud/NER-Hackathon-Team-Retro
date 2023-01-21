@@ -268,7 +268,7 @@ def main():
         ("dev", dev_features),
         ("test", test_features)
     )
-    wandb.init(project=args.project_name,entity='mahtab-team',config=vars(args))
+    wandb.init(project="banner", entity='shahad001',config=vars(args))
     train(args, model, train_features, benchmarks)
 
 

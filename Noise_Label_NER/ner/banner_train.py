@@ -282,7 +282,7 @@ def main():
         dev_features = read_banner(data_file, args, datatype='validation',max_seq_length=args.max_seq_length)
         test_features = read_banner(data_file, args, datatype='test',max_seq_length=args.max_seq_length)
     
-    wandb.init(project=args.project_name,entity='mahtab-team',config=vars(args))
+    wandb.init(project="banner", entity='shahad001',config=vars(args))
     d = Counter([label for example in train_features for label in example['labels'][0] ])
     data_dist = [d[key] for key in ID_TO_LABEL.keys()]
     crit_weights = crit_weights_gen(0.5, 0.9, data_dist)

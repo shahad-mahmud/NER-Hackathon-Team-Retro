@@ -20,11 +20,14 @@ class NERModel(nn.Module):
         self.dropout = nn.Dropout(args.dropout_prob)
         self.top_rnns=args.top_rnns
         if self.banner:
+            self.embeddings = nn.Embedding(32000, 256)
+            self.lstm = nn.LSTM(bidirectional=False, input_size=256, hidden_size=64, num_layers=2, dropout=0.3, batch_first=True)
+        
             self.model = AutoModelForPreTraining.from_pretrained(model_name, config = config )
             if self.top_rnns:
-                self.rnn = nn.LSTM(bidirectional=True, num_layers=4, dropout=0.5, input_size=768, hidden_size=768//2, batch_first=True)
+                self.rnn = nn.LSTM(bidirectional=True, num_layers=4, dropout=0.5, input_size=768+64, hidden_size=(768+64)//2, batch_first=True)
             self.classifier = nn.Sequential( 
-                    nn.Linear(768, 512),
+                    nn.Linear(768+64, 512),
                     nn.Dropout(0.5),
                     nn.Linear(512, args.num_class+1))
             self.crf = CRF(args.num_class+1)
@@ -52,6 +55,13 @@ class NERModel(nn.Module):
                 self.model.eval()
                 with torch.no_grad():
                     enc = self.model(input_ids, attention_mask).hidden_states[-1]
+            
+            # lstm embd
+            lstm_embd = self.embeddings(input_ids)
+            lstm_embd, _ = self.lstm(lstm_embd)
+            
+            enc = torch.concat([enc, lstm_embd], dim=2)
+            
             if self.top_rnns:
                 h, _ = self.rnn(enc)
             logits_focal = self.classifier(h)
