@@ -109,6 +109,7 @@ def main():
 
     import curricular_face
     cost = curricular_face.CurricularFace(len(utils.VOCAB), len(utils.VOCAB))
+    cost.to(device)
 
 
     print("***** Starting training *****")
