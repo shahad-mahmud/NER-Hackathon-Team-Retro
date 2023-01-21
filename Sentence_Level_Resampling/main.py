@@ -346,7 +346,7 @@ def main():
         print("  Num examples =", len(eval_dataset))
         print("  Batch size =", args.eval_batch_size)
 
-        test_f1_score,report = eval(model, test_iter, criterion, args, is_test=True)
+        test_f1_score, report, gt, pred = eval(model, test_iter, criterion, args, is_test=True)
 
         print("\n%s", report)
         output_eval_file = os.path.join(output_dir, "test_results.txt")
@@ -355,7 +355,15 @@ def main():
         with open(output_eval_file, "w") as writer:
             print("***** Writing results to file *****")
             writer.write(report)
-    #             logger.info("Done.")
+        
+        # save ground truth and predictions
+        gt_file_path = os.path.join(output_dir, "eval_gt_labels.txt")
+        pred_file_path = os.path.join(output_dir, "eval_pred_labels.txt")
+        
+        with open(gt_file_path) as gt_file, open(pred_file_path) as pred_file:
+            for g, p in zip(gt, pred):
+                gt_file.write(f"{g}\n")
+                pred_file.write(f"{p}\n")
                   
     print(" Save best model weights in wandb")
     model_artifact = wandb.Artifact(
@@ -365,14 +373,7 @@ def main():
     model_artifact.add_file(PATH)                  
     run.log_artifact(model_artifact)
     
-    wandb.finish()
-    # experiment_name = 'Banner with annotated data v1'
-    # mlflow.create_experiment(experiment_name,best_val_f1,test_f1_score,model_path=PATH,run_name =None,run_metrics=None,model=None,confusion_metrics_path = None, run_params = None)
-    # mlflow.set_experiment(experiment_name)
-    # with mlflow.start_run():
-    #     mlflow.log_metric(loss_list, "loss")
-    #     mlflow.sklearn.log_model(PATH,"model")
-    #     mlflow.log_artifect(f"model-validation f1 macro:{best_val_f1} test f1 macro {test_f1_score}","best_val_f1")             
+    wandb.finish()            
     plt.plot(train_loss)
     plt.xlabel("steps")
     plt.ylabel("loss")

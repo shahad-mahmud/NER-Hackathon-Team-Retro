@@ -124,6 +124,5 @@ def eval(model, iterator, criterion, args, is_test = False, epoch=None):
             f.write(headline)
             f.write(report)
         
-    return f1_macro,report
-    #return sum(loss_list)/len(loss_list)
+    return f1_macro, report, keys, preds
 
