@@ -2,7 +2,7 @@ import net
 import torch
 import argparse
 
-from dataset import NerDataset, pad, VOCAB
+from Sentence_Level_Resampling.utils.dataset import NerDataset, pad, VOCAB
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

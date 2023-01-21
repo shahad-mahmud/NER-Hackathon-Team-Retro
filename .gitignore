@@ -204,3 +204,6 @@ poetry.toml
 .vscode
 *.out
 wandb
+kg_env
+api_key.txt
+google_knowledge_graph

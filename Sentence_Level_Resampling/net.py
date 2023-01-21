@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 #from pytorch_pretrained_bert import BertModel
-from dataset import VOCAB
+from utils.dataset import VOCAB
 from crf import CRF
 from transformers import AutoModelForPreTraining, AutoConfig
 

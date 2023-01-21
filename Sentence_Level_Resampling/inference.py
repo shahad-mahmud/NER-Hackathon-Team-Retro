@@ -1,5 +1,5 @@
 from net import Net
-from dataset import NerDataset, pad, VOCAB, tokenizer, tag2idx, idx2tag
+from Sentence_Level_Resampling.utils.dataset import NerDataset, pad, VOCAB, tokenizer, tag2idx, idx2tag
 # from trainer import eval
 import torch
 import numpy as np

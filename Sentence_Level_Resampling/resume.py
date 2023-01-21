@@ -5,7 +5,7 @@ import json
 from trainer import train,eval
 from cost import crit_weights_gen
 from net import Net
-from dataset import NerDataset, VOCAB, pad
+from Sentence_Level_Resampling.utils.dataset import NerDataset, VOCAB, pad
 import torch.optim as optim
 import os
 import matplotlib.pyplot as plt

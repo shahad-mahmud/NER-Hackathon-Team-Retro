@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 import numpy as np
 from crf import CRF
-from dataset import tokenizer, VOCAB, tag2idx, idx2tag
+from utils.dataset import tokenizer, VOCAB, tag2idx, idx2tag
 from sklearn.metrics import classification_report,f1_score
 import wandb
 # import mlflow

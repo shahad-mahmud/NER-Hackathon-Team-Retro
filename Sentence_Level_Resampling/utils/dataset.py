@@ -112,6 +112,15 @@ def remove_duplicates(train_texts,train_labels):
             unq_sen[sen] = label
     return [key.split() for key in unq_sen.keys()],[val for val in unq_sen.values()]
 
+def prepare_samples(texts, labels):
+    sentences, tags = [], []
+    for x in texts:
+        sentences.append(["[CLS]"] + x + ["[SEP]"])
+    for y in labels:
+        tags.append(["<PAD>"] + y + ["<PAD>"])
+    
+    return sentences, tags
+
 
 def read_conll(file_in):
     words, labels = [], []
