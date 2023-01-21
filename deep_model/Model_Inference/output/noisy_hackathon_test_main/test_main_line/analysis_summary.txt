@@ -1,0 +1,16 @@
+Total Test sentences: 13214
+Total Invalid Real Entity tags: 0
+Total number of unqiue entities: 26024
+Tags distribution
+{'O': 152418}
+####################################################################################################
+Total Invalid Predicted Entity tags: 1332
+Total Misclassfied entities: 27317
+Total misclassifications by tags:
+O:27317
+
+Misclassificaiton tags analysis:
+O was misclassified to theses different types of tags:
+{'I-CORP': 1421, 'I-PER': 5096, 'I-PROD': 1432, 'I-GRP': 3004, 'I-LOC': 2125, 'I-CW': 2571, 'B-LOC': 1875, 'B-CORP': 1396, 'B-GRP': 1337, 'B-CW': 1776, 'B-PER': 3139, 'B-PROD': 2145}
+
+####################################################################################################

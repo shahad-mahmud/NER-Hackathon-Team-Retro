@@ -1,0 +1,42 @@
+tagset: hackathon
+model: noisy
+file_type: txt
+dataset_config:
+  collate_func: datasets.noisy.noisy_label_dataset.collate_func
+  dataset_funcs:
+    datasets.noisy.noisy_label_dataset.preprocess_data: 
+      n_model: 2
+      max_seq_length: 256
+      is_banner: True
+  test_file: data/hackathon_data/test_main_line.txt
+  tokenizer: 
+  - 'csebuetnlp/banglabert'
+  - 'csebuetnlp/banglabert'
+
+model_config:
+  weight_path: '/root/ner-research-mahtab/Noise_Label_NER/ner/noisy_model_output/banglabert_0_model.pt' 
+  model_funcs:
+    model.noisy_model.NLLModel: 
+      model_name_or_path: ["csebuetnlp/banglabert","csebuetnlp/banglabert"]
+      weighted: False
+  load_model_func: 
+    model.noisy_model.load_pretrained_model: {}
+
+device: cuda
+
+inference_config:
+  output_dir: 'output/noisy_hackathon_test_main'
+  show_performance: True
+  inference_funcs:
+    evaluate.noisy_model_inference.evaluate: 
+      best_model_index: 1
+
+show_analysis: True
+
+analysis_config:
+  show_prob_distrib: False 
+  show_intersection_mistakes: False
+  show_train_majority_mistakes: False
+  train_file: data/hackathon_data/train_line.txt
+
+# weights: [0.862590592787226,0.813810527531545,0.5,0.9,0.784179828487281,0.8485866081482979,0.8552276730286144,0.6876591690006641, 0.5,0]
