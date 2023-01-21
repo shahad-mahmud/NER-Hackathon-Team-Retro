@@ -1,0 +1,5 @@
+wandb
+transformers
+emoji
+nltk
+git+https://github.com/csebuetnlp/normalizer

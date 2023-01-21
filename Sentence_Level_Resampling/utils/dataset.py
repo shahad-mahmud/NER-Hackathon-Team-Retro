@@ -7,19 +7,19 @@ from tqdm import tqdm
 
 #tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-cased', do_lower_case=False)
 tokenizer = AutoTokenizer.from_pretrained("csebuetnlp/banglabert")
-VOCAB = ['<PAD>','B-CORP',
- 'B-CW',
- 'B-GRP',
- 'B-LOC',
- 'B-PER',
- 'B-PROD',
- 'I-CORP',
- 'I-CW',
- 'I-GRP',
- 'I-LOC',
- 'I-PER',
- 'I-PROD',
- 'O']
+VOCAB = ['<PAD>', 'B-CORP',
+         'B-CW',
+         'B-GRP',
+         'B-LOC',
+         'B-PER',
+         'B-PROD',
+         'I-CORP',
+         'I-CW',
+         'I-GRP',
+         'I-LOC',
+         'I-PER',
+         'I-PROD',
+         'O']
 
 # VOCAB = ('<PAD>', 'I-LOC', 'B-ORG', 'O', 'I-OBJ', 'I-PER', 'B-OBJ', 'I-ORG', 'B-LOC', 'B-PER')
 tag2idx = {tag: idx for idx, tag in enumerate(VOCAB)}
@@ -49,6 +49,7 @@ idx2tag = {idx: tag for idx, tag in enumerate(VOCAB)}
 # idx2tag = {idx:tag for tag,idx in tag2idx.items()}
 # VOCAB = list(tag2idx.keys())
 
+
 class NerDataset(data.Dataset):
     def __init__(self, sents, tags_li):
         self.sents, self.tags_li = sents, tags_li
@@ -57,19 +58,19 @@ class NerDataset(data.Dataset):
         return len(self.sents)
 
     def __getitem__(self, idx):
-        words, tags = self.sents[idx], self.tags_li[idx] 
+        words, tags = self.sents[idx], self.tags_li[idx]
 
-
-        x, y = [], [] 
-        is_heads = [] 
+        x, y = [], []
+        is_heads = []
         for w, t in zip(words, tags):
-            tokens = tokenizer.tokenize(w) if w not in ("[CLS]", "[SEP]") else [w]
+            tokens = tokenizer.tokenize(w) if w not in (
+                "[CLS]", "[SEP]") else [w]
             xx = tokenizer.convert_tokens_to_ids(tokens)
 
             is_head = [1] + [0]*(len(tokens) - 1)
 
-            t = [t] + ["<PAD>"] * (len(tokens) - 1) 
-            yy = [tag2idx[each] for each in t] 
+            t = [t] + ["<PAD>"] * (len(tokens) - 1)
+            yy = [tag2idx[each] for each in t]
 
             x.extend(xx)
             is_heads.extend(is_head)
@@ -77,15 +78,14 @@ class NerDataset(data.Dataset):
 
         seqlen = len(y)
 
-        
         words = " ".join(words)
         tags = " ".join(tags)
         return words, x, is_heads, tags, y, seqlen
 
 
 def pad(batch):
-    
-    f = lambda x: [sample[x] for sample in batch]
+
+    def f(x): return [sample[x] for sample in batch]
     #x = f(1)
     #y = f(-2)
     words = f(0)
@@ -93,24 +93,27 @@ def pad(batch):
     tags = f(3)
     seqlens = f(-1)
     maxlen = np.array(seqlens).max()
-    attention_mask = [[1.0] * len(labels) + [0.0] * (maxlen - len(labels)) for labels in f(-2)]
-    f = lambda x, seqlen: [sample[x] + [0] * (seqlen - len(sample[x])) for sample in batch] 
+    attention_mask = [[1.0] * len(labels) + [0.0]
+                      * (maxlen - len(labels)) for labels in f(-2)]
+
+    def f(x, seqlen): return [sample[x] + [0] *
+                              (seqlen - len(sample[x])) for sample in batch]
     x = f(1, maxlen)
     y = f(-2, maxlen)
-    
-
 
     f = torch.LongTensor
-    
-    return words, f(x), is_heads, tags, f(y), seqlens, torch.tensor(attention_mask,dtype=torch.float)
 
-def remove_duplicates(train_texts,train_labels):
+    return words, f(x), is_heads, tags, f(y), seqlens, torch.tensor(attention_mask, dtype=torch.float)
+
+
+def remove_duplicates(train_texts, train_labels):
     unq_sen = {}
-    for sen,label in zip(train_texts,train_labels):
-        sen=' '.join(sen)
+    for sen, label in zip(train_texts, train_labels):
+        sen = ' '.join(sen)
         if sen not in unq_sen:
             unq_sen[sen] = label
-    return [key.split() for key in unq_sen.keys()],[val for val in unq_sen.values()]
+    return [key.split() for key in unq_sen.keys()], [val for val in unq_sen.values()]
+
 
 def prepare_samples(texts, labels):
     sentences, tags = [], []
@@ -118,7 +121,7 @@ def prepare_samples(texts, labels):
         sentences.append(["[CLS]"] + x + ["[SEP]"])
     for y in labels:
         tags.append(["<PAD>"] + y + ["<PAD>"])
-    
+
     return sentences, tags
 
 
@@ -127,16 +130,16 @@ def read_conll(file_in):
     examples = []
     # raw_examples = []
     # is_title = False
-    with open(file_in, "r",encoding='utf-8') as fh:
+    with open(file_in, "r", encoding='utf-8') as fh:
         for line in tqdm(fh, desc=f'Reading {file_in}'):
             line = line.strip()
-            
+
             if len(line) > 0:
-                parts  = line.split('_')
-                word,label = parts[0].strip(),parts[-1].strip()
-                
+                parts = line.split('_')
+                word, label = parts[0].strip(), parts[-1].strip()
+
                 word = normalize(word)
-                
+
                 words.append(word)
                 labels.append(label)
             else:
@@ -148,3 +151,31 @@ def read_conll(file_in):
     # VOCAB = list(set([l for ins in examples for l in ins[1]]))
     # VOCAB = sorted(VOCAB)
     return examples
+
+
+def read_test_data(file_path, with_tag: bool = False):
+    samples = [[]]
+    if with_tag:
+        tags = [[]]
+
+    with open(file_path) as f:
+        for line in f:
+            line = line.strip()
+
+            if not line and samples[-1]:
+                samples.append([])
+                if with_tag:
+                    tags.append([])
+                continue
+
+            line = line.split()
+
+            word = normalize(line[0])
+            samples[-1].append(word)
+
+            if with_tag:
+                tags[-1].append(line[-1])
+
+    if with_tag:
+        return samples, tags
+    return samples

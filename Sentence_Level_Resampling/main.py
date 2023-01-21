@@ -108,7 +108,7 @@ def main():
     cost = curricular_face.CurricularFace(len(utils.VOCAB), len(utils.VOCAB))
 
 
-    print("***** Running training *****")
+    print("***** Starting training *****")
     print("  Num examples = ", len(train_dataset))
     print("  Batch size = ", args.train_batch_size)
     print("  Num steps = ", num_train_optimization_steps)
