@@ -29,11 +29,11 @@ The lemmatizer can be used both as a python function and from CLI. To run from C
 
 ```text
 arguments:
-  config        Path to the cofnig file
+  config        Path to the config file
 ```
 
 Run it as the following example for banner/sentence level resampling model:
 
 ```bash
-python main.py --config config/banner.yaml
+python main.py --config config/noisy_hackathon.yaml
 ```
