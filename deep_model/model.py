@@ -97,7 +97,7 @@ class NLLModel(nn.Module):
         self.args = args
         self.banner = args.is_banner
         self.models = nn.ModuleList()
-        self.device = [i % args.n_gpu for i in range(args.n_model)]
+        self.device = [i % args.n_gpu for i in range(args.n_model)] if args.n_model > 0 else ['cpu'] * args.n_model
         self.loss_fnt = nn.CrossEntropyLoss()
         self.n_model = args.n_model
         for i in range(self.n_model):

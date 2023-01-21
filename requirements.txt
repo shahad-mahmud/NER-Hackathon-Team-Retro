@@ -1,2 +1,11 @@
 matplotlib
 deep-utils==0.10.7
+
+--extra-index-url https://download.pytorch.org/whl/cu116
+torch
+transformers
+scikit-learn==1.2.0
+truecase==0.0.14
+wandb==0.13.9
+bnlp-toolkit==3.2.0
+python-Levenshtein==0.20.9
