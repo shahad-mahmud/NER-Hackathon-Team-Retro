@@ -14,6 +14,10 @@ import numpy as np
 import os
 import argparse
 CUDA_LAUNCH_BLOCKING = "1"
+# from transformers.optimization import get_linear_schedule_with_warmup
+# from torch.cuda.amp import autocast, GradScaler
+# import seqeval.metrics
+# import wandb
 
 
 class ArgsClass:
@@ -90,20 +94,14 @@ def evaluate(args, model, features, words_list):
             print(report)
             f.write(report)
 
-    # print(preds,keys)
-
 
 def main(args):
-
     args.alpha_t = 0.0
-    # wandb.init(project=args.project_name)
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     args.n_gpu = torch.cuda.device_count()
     args.device = device
     data_type = args.file_or_sentence
-    # set_seed(args)
-    # print(args)
 
     tokenizers = []
     for i in range(args.n_model):
@@ -133,20 +131,17 @@ def main(args):
                         words_list.append(line.split())
                         labels_list.append(['O']*len(line.split()))
 
-    # print(words_list,labels_list)
     train_features = []
 
     for words, labels in zip(words_list, labels_list):
-
         train_features.append(process_instance(
             words, labels, tokenizers, args, args.max_seq_length, args.is_banner))
 
     # first weights are for banner dataset
-    # crit_weights=[0.862590592787226,0.813810527531545,0.5,0.9,0.784179828487281,0.8485866081482979,0.8552276730286144,0.6876591690006641, 0.5,0]
-    crit_weights = [0.5, 0.6126589945487584, 0.6241671714112659, 0.6263476680799516, 0.8200484554815264, 0.8202907328891581, 0.6829194427619625, 0.8533615990308905, 0.8241671714112659, 0.842580254391278,
-                    0.5822531798909751, 0.8147183525136281, 0.8307086614173229, 0.9, 0.7407026044821321, 0.7270139309509388, 0.8766202301635373, 0.8762568140520897, 0.8681405208964265, 0.8915202907328892, 0.5, 0]
+    crit_weights = [0.7360525268603263, 0.7990847592518902, 0.7635893354556307, 0.7713887783525667, 0.7347791484281735,
+                    0.6513728611221647, 0.7206128133704736, 0.6986470354158376, 0.5, 0.9, 0.6588539594110625, 0.8267807401512137, 0.5, 0]
     crit_weights = torch.tensor(crit_weights).to(device)
-    # print(crit_weights)
+
     model = NLLModel(args, crit_weights)
     PATH = torch.load(args.pretrained_path)
     model.load_state_dict(PATH)
@@ -214,12 +209,10 @@ if __name__ == "__main__":
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_class", type=int, default=len(LABEL_TO_ID))
 
-    # parser.add_argument("--project_name", type=str, default="Noisy-Label-NER")
     parser.add_argument("--n_model", type=int, default=2)
     parser.add_argument("--alpha", type=float, default=50.0)
     parser.add_argument("--alpha_warmup_ratio", default=0.1, type=float)
 
     args = parser.parse_args()
 
-    # args = ArgsClass()
     main(args)
