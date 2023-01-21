@@ -1,0 +1,131 @@
+Total Test sentences: 799
+Total Invalid Real Entity tags: 0
+Total number of unqiue entities: 4343
+Tags distribution
+{'O': 8648, 'B-GRP': 118, 'I-GRP': 226, 'B-PROD': 189, 'B-LOC': 101, 'I-LOC': 61, 'I-PROD': 128, 'B-CORP': 127, 'B-PER': 144, 'I-PER': 180, 'B-CW': 120, 'I-CW': 161, 'I-CORP': 122}
+####################################################################################################
+Total Invalid Predicted Entity tags: 44
+Total Misclassfied entities: 416
+Total misclassifications by tags:
+O:83
+B-PROD:64
+I-PROD:31
+B-GRP:30
+I-GRP:38
+B-CW:40
+I-CW:41
+B-LOC:17
+B-PER:7
+I-PER:6
+B-CORP:32
+I-CORP:19
+I-LOC:8
+
+Misclassificaiton tags analysis:
+O was misclassified to theses different types of tags:
+{'I-PROD': 18, 'I-GRP': 2, 'B-PROD': 26, 'I-CW': 11, 'B-CW': 5, 'B-GRP': 4, 'I-CORP': 3, 'I-LOC': 6, 'B-PER': 2, 'B-LOC': 3, 'B-CORP': 2, 'I-PER': 1}
+
+B-PROD was misclassified to theses different types of tags:
+{'O': 49, 'I-PROD': 11, 'B-CW': 4}
+
+I-PROD was misclassified to theses different types of tags:
+{'O': 23, 'I-CW': 3, 'B-PROD': 5}
+
+B-GRP was misclassified to theses different types of tags:
+{'B-CW': 5, 'B-CORP': 11, 'B-PER': 2, 'O': 4, 'B-LOC': 5, 'B-PROD': 1, 'I-GRP': 1, 'I-CW': 1}
+
+I-GRP was misclassified to theses different types of tags:
+{'I-CW': 7, 'I-CORP': 18, 'O': 4, 'I-PER': 4, 'I-LOC': 5}
+
+B-CW was misclassified to theses different types of tags:
+{'B-GRP': 5, 'O': 16, 'B-PER': 7, 'I-CW': 4, 'B-PROD': 3, 'B-CORP': 4, 'I-LOC': 1}
+
+I-CW was misclassified to theses different types of tags:
+{'I-GRP': 5, 'O': 22, 'I-PER': 9, 'B-LOC': 1, 'I-LOC': 1, 'I-CORP': 2, 'I-PROD': 1}
+
+B-LOC was misclassified to theses different types of tags:
+{'B-CW': 2, 'O': 4, 'B-GRP': 4, 'I-LOC': 2, 'B-PER': 2, 'B-CORP': 2, 'I-GRP': 1}
+
+B-PER was misclassified to theses different types of tags:
+{'B-CW': 2, 'B-LOC': 2, 'I-PER': 2, 'B-CORP': 1}
+
+I-PER was misclassified to theses different types of tags:
+{'I-CW': 1, 'I-LOC': 2, 'I-CORP': 3}
+
+B-CORP was misclassified to theses different types of tags:
+{'B-GRP': 4, 'I-CW': 1, 'O': 12, 'B-PROD': 7, 'B-CW': 2, 'B-LOC': 1, 'I-PROD': 1, 'I-CORP': 1, 'B-PER': 2, 'I-GRP': 1}
+
+I-CORP was misclassified to theses different types of tags:
+{'I-GRP': 5, 'O': 8, 'I-PROD': 3, 'I-PER': 3}
+
+I-LOC was misclassified to theses different types of tags:
+{'I-GRP': 7, 'B-GRP': 1}
+
+####################################################################################################
+Among 416 misclassifed tags, 113 was high prob(>0.85) misses,    and 206 was low prob(<0.85) misses
+
+####################################################################################################
+
+Total intersecting tags between train and test set: 3110
+Total non intersecting tags between train and test set: 1233
+####################################################################################################
+ Misclassifications in Intersecting Tags analysis:
+Total Misclassfied entities: 154
+Total misclassifications by tags:
+O:54
+B-PROD:47
+B-CORP:11
+B-CW:8
+B-LOC:4
+B-GRP:8
+I-GRP:6
+I-PROD:10
+I-CW:2
+I-CORP:3
+I-LOC:1
+
+Misclassificaiton tags analysis:
+O was misclassified to theses different types of tags:
+{'I-GRP': 2, 'I-CORP': 2, 'I-PROD': 16, 'B-LOC': 1, 'I-LOC': 3, 'I-CW': 10, 'B-PROD': 13, 'B-CW': 3, 'B-PER': 2, 'I-PER': 1, 'B-GRP': 1}
+
+B-PROD was misclassified to theses different types of tags:
+{'O': 35, 'I-PROD': 9, 'B-CW': 3}
+
+B-CORP was misclassified to theses different types of tags:
+{'I-PROD': 1, 'I-CORP': 1, 'O': 5, 'B-PROD': 1, 'B-CW': 1, 'I-CW': 1, 'B-GRP': 1}
+
+B-CW was misclassified to theses different types of tags:
+{'I-CW': 2, 'B-CORP': 1, 'O': 4, 'B-PROD': 1}
+
+B-LOC was misclassified to theses different types of tags:
+{'B-PER': 1, 'I-LOC': 1, 'B-GRP': 1, 'B-CORP': 1}
+
+B-GRP was misclassified to theses different types of tags:
+{'B-CORP': 3, 'B-CW': 2, 'B-PROD': 1, 'I-CW': 1, 'B-LOC': 1}
+
+I-GRP was misclassified to theses different types of tags:
+{'I-CORP': 5, 'I-CW': 1}
+
+I-PROD was misclassified to theses different types of tags:
+{'O': 7, 'B-PROD': 1, 'I-CW': 2}
+
+I-CW was misclassified to theses different types of tags:
+{'O': 2}
+
+I-CORP was misclassified to theses different types of tags:
+{'O': 2, 'I-GRP': 1}
+
+I-LOC was misclassified to theses different types of tags:
+{'I-GRP': 1}
+
+####################################################################################################
+ Misclassifications in Intersecting Tags due to choosing train majority tag analysis:
+Total Misclassfied entities: 3
+Total misclassifications by tags:
+O:3
+
+Misclassificaiton tags analysis:
+O was misclassified to theses different types of tags:
+{'B-LOC': 1, 'B-PROD': 2}
+
+####################################################################################################

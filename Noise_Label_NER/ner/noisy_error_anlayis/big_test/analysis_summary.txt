@@ -1,0 +1,64 @@
+Total Test sentences: 133119
+Total Invalid Real Entity tags: 0
+Total number of unqiue entities: 84990
+Tags distribution
+{'B-PER': 24601, 'I-PER': 30550, 'O': 385861, 'B-PROD': 20878, 'I-PROD': 14509, 'B-GRP': 19177, 'I-GRP': 47898, 'B-CW': 21281, 'B-LOC': 29630, 'B-CORP': 20066, 'I-CORP': 21106, 'I-LOC': 27371, 'I-CW': 30870}
+####################################################################################################
+Total Invalid Predicted Entity tags: 6952
+Total Misclassfied entities: 114700
+Total misclassifications by tags:
+O:16340
+B-PROD:8392
+I-PROD:4342
+B-GRP:7560
+B-CW:9299
+I-GRP:12347
+B-CORP:7080
+I-CORP:6767
+B-LOC:13246
+I-LOC:9739
+B-PER:4776
+I-CW:10856
+I-PER:3956
+
+Misclassificaiton tags analysis:
+O was misclassified to theses different types of tags:
+{'I-CW': 1662, 'B-PROD': 672, 'B-CORP': 868, 'B-GRP': 843, 'I-LOC': 3197, 'I-GRP': 2345, 'I-CORP': 1069, 'I-PER': 924, 'I-PROD': 641, 'B-PER': 1385, 'B-CW': 1628, 'B-LOC': 1106}
+
+B-PROD was misclassified to theses different types of tags:
+{'O': 4335, 'I-CW': 253, 'I-PROD': 511, 'I-CORP': 14, 'I-PER': 67, 'B-CW': 2154, 'B-GRP': 49, 'B-LOC': 280, 'B-PER': 274, 'B-CORP': 423, 'I-GRP': 6, 'I-LOC': 26}
+
+I-PROD was misclassified to theses different types of tags:
+{'O': 2759, 'I-CW': 1000, 'I-PER': 290, 'I-CORP': 114, 'I-GRP': 35, 'B-PROD': 86, 'B-CW': 8, 'I-LOC': 32, 'B-LOC': 2, 'B-GRP': 2, 'B-CORP': 8, 'B-PER': 6}
+
+B-GRP was misclassified to theses different types of tags:
+{'B-CORP': 534, 'O': 4379, 'B-CW': 973, 'I-GRP': 547, 'B-LOC': 464, 'I-PER': 61, 'B-PER': 230, 'B-PROD': 160, 'I-CORP': 40, 'I-CW': 114, 'I-LOC': 39, 'I-PROD': 19}
+
+B-CW was misclassified to theses different types of tags:
+{'O': 4443, 'B-CORP': 390, 'B-LOC': 524, 'I-CW': 1351, 'B-PROD': 924, 'I-CORP': 31, 'B-GRP': 321, 'B-PER': 845, 'I-GRP': 79, 'I-PER': 231, 'I-PROD': 85, 'I-LOC': 75}
+
+I-GRP was misclassified to theses different types of tags:
+{'O': 5762, 'B-LOC': 526, 'I-LOC': 2397, 'I-CW': 1532, 'B-GRP': 816, 'I-PROD': 149, 'I-PER': 324, 'I-CORP': 632, 'B-CORP': 37, 'B-CW': 104, 'B-PER': 32, 'B-PROD': 36}
+
+B-CORP was misclassified to theses different types of tags:
+{'O': 1770, 'B-LOC': 400, 'I-CORP': 395, 'B-CW': 1869, 'B-PROD': 1277, 'B-PER': 301, 'B-GRP': 771, 'I-PROD': 71, 'I-PER': 60, 'I-CW': 102, 'I-GRP': 49, 'I-LOC': 15}
+
+I-CORP was misclassified to theses different types of tags:
+{'I-LOC': 195, 'O': 2892, 'I-CW': 1156, 'I-GRP': 1223, 'I-PROD': 848, 'I-PER': 306, 'B-PROD': 35, 'B-CORP': 62, 'B-CW': 13, 'B-LOC': 12, 'B-GRP': 15, 'B-PER': 10}
+
+B-LOC was misclassified to theses different types of tags:
+{'I-LOC': 1704, 'B-PER': 2180, 'O': 3858, 'B-CW': 1504, 'I-GRP': 183, 'B-GRP': 1009, 'I-CW': 268, 'I-PER': 731, 'B-CORP': 585, 'B-PROD': 1088, 'I-PROD': 64, 'I-CORP': 72}
+
+I-LOC was misclassified to theses different types of tags:
+{'I-PER': 3383, 'I-CW': 1433, 'O': 2620, 'I-GRP': 1214, 'B-PROD': 16, 'B-LOC': 244, 'I-CORP': 257, 'B-GRP': 29, 'I-PROD': 496, 'B-CW': 14, 'B-PER': 29, 'B-CORP': 4}
+
+B-PER was misclassified to theses different types of tags:
+{'O': 1825, 'I-CW': 109, 'I-GRP': 65, 'B-PROD': 257, 'B-LOC': 405, 'I-PER': 731, 'B-CW': 1019, 'I-LOC': 48, 'B-CORP': 126, 'B-GRP': 178, 'I-CORP': 4, 'I-PROD': 9}
+
+I-CW was misclassified to theses different types of tags:
+{'O': 7387, 'B-PER': 98, 'I-PROD': 531, 'I-GRP': 580, 'B-CW': 495, 'I-PER': 1076, 'B-PROD': 53, 'I-LOC': 345, 'I-CORP': 212, 'B-CORP': 11, 'B-LOC': 54, 'B-GRP': 14}
+
+I-PER was misclassified to theses different types of tags:
+{'O': 1595, 'I-CW': 1087, 'I-GRP': 319, 'I-LOC': 274, 'B-LOC': 83, 'B-PER': 213, 'I-PROD': 202, 'B-CW': 52, 'I-CORP': 101, 'B-GRP': 9, 'B-PROD': 19, 'B-CORP': 2}
+
+####################################################################################################
