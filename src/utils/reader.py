@@ -22,3 +22,24 @@ def read_ner_data(file_path: str):
         tags[-1].append(tag)
 
     return lines, tags
+
+def read_test_ner_data(file_path: str):
+    file = open(file_path, 'r')
+    lines = [[]]
+
+    for line in file:
+        line = line.strip()
+        info = line.split()
+
+        if not line:
+            if not lines[-1]:
+                continue
+
+            lines.append([])
+            continue
+
+        word = info[0]
+
+        lines[-1].append(word)
+
+    return lines

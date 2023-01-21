@@ -18,15 +18,17 @@ if __name__ == "__main__":
     
     train_data = src.utils.read_ner_data(configs['train_data_path'])
     valid_data = src.utils.read_ner_data(configs['valid_data_path'])
-    test_data = src.utils.read_ner_data(configs['test_data_path'])
+    # test_data = src.utils.read_ner_data(configs['test_data_path'])
+    test_data = src.utils.read_test_ner_data(configs['test_data_path'])
     
     train_features = [src.utils.line_to_features(line) for line in tqdm(train_data[0], dynamic_ncols=True)]
     valid_features = [src.utils.line_to_features(line) for line in tqdm(valid_data[0], dynamic_ncols=True)]
-    test_features = [src.utils.line_to_features(line) for line in tqdm(test_data[0], dynamic_ncols=True)]
+    # test_features = [src.utils.line_to_features(line) for line in tqdm(test_data[0], dynamic_ncols=True)]
+    test_features = test_data
 
     train_labels = train_data[1]
     valid_labels = valid_data[1]
-    test_labels = test_data[1]
+    # test_labels = test_data[1]
     
     model = sklearn_crfsuite.CRF(
         algorithm='lbfgs',
