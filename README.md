@@ -28,3 +28,7 @@ feature_model_predict.py TEXT_FILE_PATH --model TRAINED_MODEL_PATH
 # example
 # feature_model_predict.py data/preprocessed/test.txt --model data/results/crf.model
 ```
+
+## Deep learning based model
+
+Deep learning based model's details are provided in `deep_model` directory.
